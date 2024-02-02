@@ -1,5 +1,4 @@
 package com.example.food_add
 
-data class FoodData(val title : String){
-
-}
+data class FoodData(var title: String,
+                    var calories: Int)

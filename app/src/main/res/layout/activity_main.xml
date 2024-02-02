@@ -155,23 +155,65 @@
 
                 </TextView>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                 <EditText
-                    android:id="@+id/gramEditText"
-                    android:layout_width="318dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="12dp">
+                    android:id="@+id/foodAddEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="247"
+                    android:layout_marginLeft="2dp"
+                    android:fontFamily="@font/medium"
+                    android:textColor="#9195D4"
+                    android:text="음식 추가하기"
+                    android:textSize="12dp"
+                    android:paddingLeft="15dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text">
                 </EditText>
 
+                <ImageView
+                    android:layout_width="1.3dp"
+                    android:layout_height="match_parent"
+                    android:foreground="@drawable/line_57">
+                </ImageView>
 
+                <EditText
+                    android:id="@+id/kcalAddEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="93"
+                    android:fontFamily="@font/medium"
+                    android:textColor="#9195D4"
+                    android:text="100 Kcal"
+                    android:textSize="12dp"
+                    android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:inputType="number">
+                </EditText>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#B9BDFF"
-                android:padding="8dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="341dp"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="341dp"
+                    android:layout_height="match_parent"
+                    android:background="#B9BDFF"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -187,16 +229,18 @@
         android:textColor="#1A28FF" />
 
     <EditText
-        android:id="@+id/gram"
+        android:id="@+id/gramEditText"
         android:layout_width="341dp"
         android:layout_height="31dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="25dp"
         android:ems="10"
         android:fontFamily="@font/medium"
-        android:inputType="text"
-        android:text="       0g"
         android:textColor="#747CFF"
+        android:text="0g"
+        android:inputType="number"
+        android:paddingLeft="25dp"
+
         android:textSize="12sp"
         android:background="@drawable/rectangle_133"
         android:layout_gravity="center_horizontal" />

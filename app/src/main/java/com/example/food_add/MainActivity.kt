@@ -1,13 +1,11 @@
 package com.example.food_add
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -19,7 +17,6 @@ import java.util.Locale
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.TimePicker
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -29,14 +26,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var cardView : MaterialCardView
-    private lateinit var imageView1 : ImageView
+    private lateinit var cardview_time : MaterialCardView
+    private lateinit var foodimageView : ImageView
+    private lateinit var timeimageView : ImageView
     private lateinit var expandableLayout: View
-    private lateinit var expandableLayout2 : View
+    private lateinit var expandableLayout_time: View
     private var mList: MutableList<FoodData> = mutableListOf()
     private lateinit var adapter: FoodAdapter
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandBtn: Button
+    private lateinit var expandBtn_time: Button
+    private lateinit var foodaddBtn: Button
     private var isImage1Visible = true
+    private var isImage2Visible = true
     private lateinit var gramEditText: EditText
     private lateinit var foodAddEditText: EditText
     private lateinit var kcalAddEditText: EditText
@@ -53,12 +55,16 @@ class MainActivity : AppCompatActivity() {
 
 
         cardView = binding.materialCardView
+        cardview_time = binding.materialCardViewTime
         recyclerView = binding.recyclerView
         searchView = binding.searchView
         expandableLayout = binding.expandableLayout
-        expandableLayout2 = binding.expandableLayout2
+        expandableLayout_time = binding.expandableLayoutTime
         expandBtn = binding.expandBtn
-        imageView1 = binding.foodimageView
+        expandBtn_time = binding.expandBtnTime
+        foodaddBtn = binding.foodaddBtn
+        foodimageView = binding.foodimageView
+        timeimageView = binding.timeimageView
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = FoodAdapter(mList)
@@ -97,35 +103,57 @@ class MainActivity : AppCompatActivity() {
                 expandableLayout.visibility = View.GONE
                 cardView.visibility = View.GONE
             }
+
         }
 
-        binding.expandBtn2.setOnClickListener {
+        binding.expandBtnTime.setOnClickListener {
+            toggleImageTime()
 
+            Log.d("eT", "함수진입1")
+            if (expandableLayout_time.visibility == View.GONE) {
+                Log.d("eT", "함수진입2")
+                expandableLayout_time.visibility = View.VISIBLE
+                cardview_time.visibility = View.VISIBLE
+                Log.d("eT", "함수진입3")
+            } else {
+                expandableLayout_time.visibility = View.GONE
+                cardview_time.visibility = View.GONE
+            }
+        }
+
+        binding.foodaddBtn.setOnClickListener {
             addFoodToList()
-
         }
 
         deleteData()
 
         // 리스트 아이템 클릭 이벤트 처리
         adapter.setOnItemClickListener { foodName ->
-            // name: 클릭된 이름
             toggleExpandableLayout(foodName)
 
             expandableLayout.visibility = View.GONE
             cardView.visibility = View.GONE
 
-            // EditText에서 그램을 입력받는 부분
-            val kcal = getgramFromEditText()
 
-            // TimePicker에서 시간을 입력받는 부분
-            val time = getTimeFromTimePicker()
-
-            // SharedPreferences에 데이터 저장
-            val userPreferences = UserFoodClass(this)
-            userPreferences.saveUserData(foodName, kcal, time)
+//            val kcal = getgramFromEditText()
+//
+//            val time = getTimeFromTimePicker()
+//
+//            val userPreferences = UserFoodClass(this)
+//            userPreferences.saveUserData(foodName, kcal, time)
         }
 
+        binding.timePicker.setOnTimeChangedListener { timePicker, hour, minute ->
+            val timeFormat = if (hour > 12) {
+                val adjustedHour = hour - 12
+                "오후 $adjustedHour 시 $minute 분"
+            } else {
+                "오전 $hour 시 $minute 분"
+            }
+
+            binding.expandBtnTime.text = timeFormat
+            expandBtn_time.setTextColor(Color.parseColor("#000000"))
+        }
 
     }
 
@@ -172,8 +200,6 @@ class MainActivity : AppCompatActivity() {
         if (userInput2.isNotEmpty()) {
             try {
                 val calories = userInput2.toInt()
-                // 이제 calories 변수에 정수 값이 들어 있습니다.
-                // mList에 추가하는 등의 작업을 수행할 수 있습니다.
 
                 if (userInput.isNotEmpty()) {
                     Log.d("addfoodTOList", "함수진입2")
@@ -185,9 +211,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     Log.d("addfoodTOList", "함수진입3")
-
-                    // 리스트 업데이트 등 추가적인 처리를 할 수 있음
-                    // 예: 어댑터에 변경 사항 알림, UI 갱신 등
 
                     adapter.notifyDataSetChanged()
                 }
@@ -204,13 +227,25 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun toggleImage() {
         if (isImage1Visible) {
-            imageView1.setImageDrawable(getDrawable(R.drawable.group_124))
+            foodimageView.setImageDrawable(getDrawable(R.drawable.group_124))
 
         } else {
-            imageView1.setImageDrawable(getDrawable(R.drawable.group_126))
+            foodimageView.setImageDrawable(getDrawable(R.drawable.group_126))
         }
 
         isImage1Visible = !isImage1Visible
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun toggleImageTime() {
+        if (isImage2Visible) {
+            timeimageView.setImageDrawable(getDrawable(R.drawable.group_124))
+
+        } else {
+            timeimageView.setImageDrawable(getDrawable(R.drawable.group_126))
+        }
+
+        isImage2Visible = !isImage2Visible
     }
 
     private fun deleteData(){
@@ -240,10 +275,15 @@ class MainActivity : AppCompatActivity() {
 //        adapter.loadData(this)
 //    }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun toggleExpandableLayout(clickedItemTitle: String) {
+        Log.d("toggleExpandableLayout", "Clicked Item Title: $clickedItemTitle")
 
-        //text를 foodname으로 바꾸는 함수
+        expandBtn.text = clickedItemTitle
+        expandBtn.setTextColor(Color.parseColor("#000000"))
+        toggleImage()
 
+        Log.d("toggleExpandableLayout", "expandBtn.text: ${expandBtn.text}")
     }
 
     fun getgramFromEditText(): Int {

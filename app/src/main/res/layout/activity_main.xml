@@ -84,7 +84,7 @@
         app:cardCornerRadius="10dp"
         app:strokeColor="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <LinearLayout
@@ -93,7 +93,7 @@
             android:layout_height="200dp"
             android:background="@drawable/subtract"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             >
 
             <LinearLayout
@@ -125,7 +125,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <Button
-                    android:id="@+id/expandBtn2"
+                    android:id="@+id/foodaddBtn"
                     android:layout_width="57dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="23dp"
@@ -137,7 +137,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/expandableLayout2"
                 android:layout_width="341dp"
                 android:layout_height="50dp"
                 android:orientation="vertical"
@@ -264,7 +263,7 @@
         android:layout_marginBottom="0dp"/>
 
     <Button
-        android:id="@+id/expandBtn3"
+        android:id="@+id/expandBtn_time"
         android:layout_width="341dp"
         android:layout_height="35dp"
         android:layout_gravity="center_horizontal"
@@ -279,7 +278,7 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView2"
+        android:id="@+id/materialCardView_time"
         android:layout_width="341dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -287,16 +286,16 @@
         app:cardCornerRadius="10dp"
         app:strokeColor="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <LinearLayout
-            android:id="@+id/expandableLayout3"
+            android:id="@+id/expandableLayout_time"
             android:layout_width="341dp"
             android:layout_height="200dp"
             android:background="@drawable/subtract"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             >
 
             <TimePicker

@@ -53,4 +53,6 @@ dependencies {
     //삭제
     testImplementation ("junit:junit:4.+")
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
+    //sharedpreference
+    implementation ("com.google.code.gson:gson:2.8.8")
 }

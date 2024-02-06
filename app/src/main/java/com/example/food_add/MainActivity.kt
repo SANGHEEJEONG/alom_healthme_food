@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         foodAddEditText = findViewById(R.id.foodAddEditText)
         kcalAddEditText = findViewById(R.id.kcalAddEditText)
         timePicker = findViewById(R.id.timePicker)
-        
+
 
         addDefaultFoodToList()
 
@@ -133,14 +133,6 @@ class MainActivity : AppCompatActivity() {
 
             expandableLayout.visibility = View.GONE
             cardView.visibility = View.GONE
-
-
-//            val kcal = getgramFromEditText()
-//
-//            val time = getTimeFromTimePicker()
-//
-//            val userPreferences = UserFoodClass(this)
-//            userPreferences.saveUserData(foodName, kcal, time)
         }
 
         binding.timePicker.setOnTimeChangedListener { timePicker, hour, minute ->
@@ -191,30 +183,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addFoodToList(nextPosition: Int? = null) {
-        Log.d("addfoodTOList","함수진입1")
+        Log.d("addfoodTOList", "함수진입1")
         val userInput = foodAddEditText.text.toString().trim()
         val userInput2 = kcalAddEditText.text.toString().trim()
-
-
 
         if (userInput2.isNotEmpty()) {
             try {
                 val calories = userInput2.toInt()
-
                 if (userInput.isNotEmpty()) {
                     Log.d("addfoodTOList", "함수진입2")
-
                     if (nextPosition != null) {
                         mList.add(nextPosition, FoodData(userInput, calories))
                     } else {
                         mList.add(FoodData(userInput, calories))
                     }
-
                     Log.d("addfoodTOList", "함수진입3")
-
                     adapter.notifyDataSetChanged()
                 }
-
             } catch (e: NumberFormatException) {
                 // 변환 실패 처리
                 // 사용자가 정수로 변환할 수 없는 값을 입력한 경우 예외가 발생합니다.
@@ -228,7 +213,6 @@ class MainActivity : AppCompatActivity() {
     private fun toggleImage() {
         if (isImage1Visible) {
             foodimageView.setImageDrawable(getDrawable(R.drawable.group_124))
-
         } else {
             foodimageView.setImageDrawable(getDrawable(R.drawable.group_126))
         }
@@ -265,52 +249,39 @@ class MainActivity : AppCompatActivity() {
         touchHelper.attachToRecyclerView((recyclerView))
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//        adapter.saveData(this)
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        adapter.loadData(this)
-//    }
-
     @RequiresApi(Build.VERSION_CODES.M)
     private fun toggleExpandableLayout(clickedItemTitle: String) {
-        Log.d("toggleExpandableLayout", "Clicked Item Title: $clickedItemTitle")
-
         expandBtn.text = clickedItemTitle
         expandBtn.setTextColor(Color.parseColor("#000000"))
         toggleImage()
-
-        Log.d("toggleExpandableLayout", "expandBtn.text: ${expandBtn.text}")
     }
 
-    fun getgramFromEditText(): Int {
-        val gramText = gramEditText.text.toString()
-        return if (gramText.isNotEmpty()) {
-            gramText.toInt()
-        } else {
-            // 기본값 또는 에러 처리를 원하는 대로 설정
-            0
-        }
-    }
 
-    fun getTimeFromTimePicker(): String {
-        val hour = if (Build.VERSION.SDK_INT >= 23) {
-            timePicker.hour
-        } else {
-            timePicker.currentHour
-        }
+//    fun getgramFromEditText(): Int {
+//        val gramText = gramEditText.text.toString()
+//        return if (gramText.isNotEmpty()) {
+//            gramText.toInt()
+//        } else {
+//            // 기본값 또는 에러 처리를 원하는 대로 설정
+//            0
+//        }
+//    }
 
-        val minute = if (Build.VERSION.SDK_INT >= 23) {
-            timePicker.minute
-        } else {
-            //timePicker.currentMinute
-        }
-
-        // 시간을 원하는 형식으로 포맷팅
-        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
-    }
-
+//    @Suppress("DEPRECATION")
+//    fun getTimeFromTimePicker(): String {
+//        val hour: Int
+//        val minute: Int
+//
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            hour = timePicker.hour
+//            minute = timePicker.minute
+//        } else {
+//            @Suppress("DEPRECATION")
+//            hour = timePicker.currentHour
+//            @Suppress("DEPRECATION")
+//            minute = timePicker.currentMinute
+//        }
+//
+//        // 시간을 원하는 형식으로 포맷팅
+//        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
 }

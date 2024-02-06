@@ -47,6 +47,4 @@ object SharedPreferenceUtils {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString(key, defaultValue) ?: ""
     }
-
-
 }

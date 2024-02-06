@@ -1,4 +1,8 @@
 package com.example.food_add
 
-data class FoodData(var title: String,
-                    var calories: Int)
+import java.io.Serializable
+
+data class FoodData(
+    var title: String,
+    var calories: Int
+) : Serializable

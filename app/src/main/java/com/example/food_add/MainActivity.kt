@@ -21,8 +21,6 @@ import android.widget.ImageView
 import android.widget.TimePicker
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.food_add.SharedPreference.addUserInput
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -199,7 +197,7 @@ class MainActivity : AppCompatActivity() {
                     val newFood = FoodData(userInput, userInput2.toInt())
                     mList.add(newFood)
                     adapter.notifyItemInserted(mList.size - 1)
-                    saveFoodListToSharedPreferences(mList, mutableListOf(), mutableListOf())
+                    saveFoodListToSharedPreferences(mList, mutableListOf())
             } catch (e: NumberFormatException) {
                 // 변환 실패 처리
                 // 사용자가 정수로 변환할 수 없는 값을 입력한 경우 예외가 발생합니다.
@@ -240,7 +238,7 @@ class MainActivity : AppCompatActivity() {
                     ItemTouchHelper.LEFT ->{
                         adapter.deleteItem(viewHolder.absoluteAdapterPosition)
                         // 삭제된 음식을 SharedPreferences에 저장
-                        saveFoodListToSharedPreferences(mList, deletedItems, mutableListOf())
+                        saveFoodListToSharedPreferences(mList, deletedItems)
                     }
                 }
             }
@@ -259,7 +257,6 @@ class MainActivity : AppCompatActivity() {
     private fun saveFoodListToSharedPreferences(
         foodList: MutableList<FoodData>,
         deletedItems: MutableList<String>,
-        modifiedItems: MutableList<FoodData>
     ) {
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val foodSet = foodList.map { "${it.title}|${it.calories}" }.toMutableSet()
@@ -267,10 +264,6 @@ class MainActivity : AppCompatActivity() {
 
         // 삭제된 음식 리스트 저장
         sharedPreferences.edit().putStringSet("deletedItems", deletedItems.toSet()).apply()
-
-        // 수정된 음식 리스트 저장
-        val modifiedFoodSet = modifiedItems.map { "${it.title}|${it.calories}" }.toMutableSet()
-        sharedPreferences.edit().putStringSet("modifiedItems", modifiedFoodSet).apply()
     }
 
     private fun loadSavedData() {
@@ -296,40 +289,7 @@ class MainActivity : AppCompatActivity() {
 
         // 삭제된 음식 및 수정된 음식 적용
         mList.removeAll { deletedItems.contains(it.title) }
-        modifiedItems.forEach { modifiedItem ->
-            mList.find { it.title == modifiedItem.title }?.apply {
-                this.calories = modifiedItem.calories // 수정된 칼로리 적용
-            }
-        }
         adapter.notifyDataSetChanged()
     }
 
-
-//    fun getgramFromEditText(): Int {
-//        val gramText = gramEditText.text.toString()
-//        return if (gramText.isNotEmpty()) {
-//            gramText.toInt()
-//        } else {
-//            // 기본값 또는 에러 처리를 원하는 대로 설정
-//            0
-//        }
-//    }
-
-//    @Suppress("DEPRECATION")
-//    fun getTimeFromTimePicker(): String {
-//        val hour: Int
-//        val minute: Int
-//
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            hour = timePicker.hour
-//            minute = timePicker.minute
-//        } else {
-//            @Suppress("DEPRECATION")
-//            hour = timePicker.currentHour
-//            @Suppress("DEPRECATION")
-//            minute = timePicker.currentMinute
-//        }
-//
-//        // 시간을 원하는 형식으로 포맷팅
-//        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
 }

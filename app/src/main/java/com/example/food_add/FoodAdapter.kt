@@ -52,8 +52,6 @@ class FoodAdapter(var mList: MutableList<FoodData>, private val context: Context
 
     // 삭제
     fun deleteItem(i: Int) {
-        // 삭제된 항목의 인덱스를 저장합니다.
-        SharedPreference.saveDeletedItemIndices(context, listOf(i))
         mList.removeAt(i)
         notifyDataSetChanged()
     }

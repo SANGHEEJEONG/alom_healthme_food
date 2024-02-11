@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class FoodAdapter(var mList: MutableList<FoodData>) :
+
+class FoodAdapter(var mList: MutableList<FoodData>, private val context: Context) :
     RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     private var onItemClickListener: ((String) -> Unit)? = null
@@ -51,9 +52,9 @@ class FoodAdapter(var mList: MutableList<FoodData>) :
 
     // 삭제
     fun deleteItem(i: Int) {
+        // 삭제된 항목의 인덱스를 저장합니다.
+        SharedPreference.saveDeletedItemIndices(context, listOf(i))
         mList.removeAt(i)
         notifyDataSetChanged()
     }
-
-
 }

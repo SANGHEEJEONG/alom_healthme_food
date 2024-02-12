@@ -264,13 +264,6 @@ class MainActivity : AppCompatActivity() {
         val deletedItemsSet = sharedPreferences.getStringSet("deletedItems", setOf()) ?: setOf()
         val deletedItems = deletedItemsSet.toMutableList()
 
-        // 수정된 음식 리스트 불러오기
-        val modifiedItemsSet = sharedPreferences.getStringSet("modifiedItems", setOf()) ?: setOf()
-        val modifiedItems = modifiedItemsSet.map {
-            val (title, calories) = it.split("|")
-            FoodData(title, calories.toInt())
-        }.toMutableList()
-
         // 삭제된 음식 및 수정된 음식 적용
         mList.removeAll { deletedItems.contains(it.title) }
         adapter.notifyDataSetChanged()

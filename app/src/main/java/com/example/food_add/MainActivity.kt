@@ -80,16 +80,6 @@ class MainActivity : AppCompatActivity() {
         addDefaultFoodToList()
         loadSavedData()
 
-//        val userInputDataList = SharedPreference.loadUserInputList(this)
-//        userInputDataList.forEach { (userInput, calories) ->
-//            val userIndex = mList.indexOfFirst { it.title == userInput }
-//            val deletedIndices = SharedPreference.loadDeletedItemIndices(this)
-//            if (userIndex == -1 || userIndex !in deletedIndices) {
-//                mList.add(FoodData(userInput, calories))
-//            }
-//        }
-//        adapter.notifyDataSetChanged()
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -117,12 +107,9 @@ class MainActivity : AppCompatActivity() {
         binding.expandBtnTime.setOnClickListener {
             toggleImageTime()
 
-            Log.d("eT", "함수진입1")
             if (expandableLayout_time.visibility == View.GONE) {
-                Log.d("eT", "함수진입2")
                 expandableLayout_time.visibility = View.VISIBLE
                 cardview_time.visibility = View.VISIBLE
-                Log.d("eT", "함수진입3")
             } else {
                 expandableLayout_time.visibility = View.GONE
                 cardview_time.visibility = View.GONE
@@ -135,7 +122,6 @@ class MainActivity : AppCompatActivity() {
 
         deleteData()
 
-        // 리스트 아이템 클릭 이벤트 처리
         adapter.setOnItemClickListener { foodName ->
             toggleExpandableLayout(foodName)
 
@@ -154,7 +140,6 @@ class MainActivity : AppCompatActivity() {
             binding.expandBtnTime.text = timeFormat
             expandBtn_time.setTextColor(Color.parseColor("#000000"))
         }
-
     }
 
     private fun filterList(query: String?) {
@@ -231,7 +216,6 @@ class MainActivity : AppCompatActivity() {
     }
 
      private fun deleteData(){
-        Log.d("deleteData","함수진입")
         val swipegesture = object : SwipeGesture(this){
             override fun onSwiped(viewHolder: ViewHolder,direction:Int){
                 when(direction){
